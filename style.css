@@ -1,17 +1,9 @@
-/* Nasconde la scrollbar in modo compatibile */
+/* --- Nasconde scrollbar verticale se vuoi, altrimenti cambia overflow-y in auto --- */
 html {
-  overflow-y: hidden;
-  box-sizing: border-box;
   margin: 0;
-}
-
-
-@supports (overflow-y: overlay) {
-  html {
-    overflow-y: overlay; /* se supportato, usa overlay */
-    box-sizing: border-box;
-    margin:0;
-  }
+  height: 100%;
+  overflow-y: hidden; /* usa 'auto' se vuoi scrollbar */
+  box-sizing: border-box;
 }
 
 body {
@@ -19,15 +11,14 @@ body {
   background-color: #f4f4f9;
   color: #333;
   margin: 0;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  height: 100vh;
   display: flex;
-  position: fixed;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  overflow-y: auto;
-  scrollbar-width: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
   box-sizing: border-box;
+  /* position fixed rimosso */
+  /* overflow-y rimosso */
 }
 
 body.dark {
