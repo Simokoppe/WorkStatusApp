@@ -38,6 +38,7 @@ body {
   min-height: 100vh;
   overflow-y: auto;
   scrollbar-width: none;
+  padding: 0;
 }
 
 body.dark {
