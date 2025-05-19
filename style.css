@@ -28,10 +28,11 @@ body.dark {
 
 .container {
   border: 2px solid red;
-  background-color: #fff;
+  background-color: rgba(255, 0, 0, 0.1);
   padding: 30px 40px;
   border-radius: 8px;
-  width: 450px;
+  width: 450px !important;
+  height: 300px !important;
   box-shadow: 0 4px 10px rgba(65, 64, 64, 0.692);
   transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
   text-align: center;
