@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Work Status</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1 id="time">🕒 --:--:--</h1>
+    <h2 id="day">--</h2>
+    <h3 id="week">Settimana --</h3>
+
+    <div class="section">
+      <h2>
+        <span>Percentuale giornata:</span> <span id="daily-percentage">--%</span>
+      </h2>
+      <div class="progress-bar">
+        <div class="fill" id="progress-fill-day"></div>
+      </div>
+      <img
+        id="status-img-day"
+        src="assets/faccina_triste.png"
+        alt="stato giornata"
+      />
+    </div>
+
+    <div class="section">
+      <h2>
+        <span>Percentuale settimana:</span> <span id="percentage">--%</span>
+      </h2>
+      <div class="progress-bar">
+        <div class="fill" id="progress-fill-week"></div>
+      </div>
+      <img
+        id="status-img-week"
+        src="assets/faccina_triste.png"
+        alt="stato settimana"
+      />
+    </div>
+  </div>
+
+  <button id="theme-toggle" aria-label="Toggle tema" title="Toggle tema" class="theme-btn">
+    <span id="theme-icon">☀️<span>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
