@@ -1,20 +1,25 @@
-/* --- Stili base --- */
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 20px;
+html {
+  overflow-y: auto;
   box-sizing: border-box;
+  margin: 0;
+  padding: 20px; /* Mantieni il padding per evitare che tocchi i bordi */
 }
 
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f9;
   color: #333;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  /* Flexbox per centrare */
   display: flex;
   justify-content: center;
   align-items: center;
+
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  box-sizing: border-box;
 }
 
 body.dark {
@@ -27,18 +32,15 @@ body.dark {
   padding: 30px 40px;
   border-radius: 8px;
   width: 450px;
-  max-width: 100%;
-  box-shadow: 0 4px 10px rgba(65, 64, 64, 0.7);
-  border: 2px solid #0078d7; /* bordo ben visibile */
-  text-align: center;
+  box-shadow: 0 4px 10px rgba(65, 64, 64, 0.692);
   transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
-  box-sizing: border-box;
+  text-align: center;
+  box-sizing: border-box; /* assicurati che padding non aumenti larghezza */
 }
 
 body.dark .container {
   background-color: #1e1e1e;
-  box-shadow: 0 4px 15px rgba(150, 150, 150, 0.4);
-  border-color: #3399ff;
+  box-shadow: 0 4px 15px rgba(150, 150, 150, 0.438);
 }
 
 h1#time {
@@ -108,7 +110,7 @@ body.dark .progress-bar {
 }
 
 .theme-btn #theme-icon {
-  font-size: 2rem;
+  font-size: 2rem; /* o qualsiasi dimensione preferisci */
   display: inline-block;
   line-height: 1;
 }
