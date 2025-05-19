@@ -1,6 +1,12 @@
 /* --- Stili base --- */
 html {
-  overflow-y: auto;
+  overflow-y: auto; /* fallback di base */
+}
+
+@supports (overflow-y: overlay) {
+  html {
+    overflow-y: overlay; /* se supportato, usa overlay */
+  }
 }
 
 body {
