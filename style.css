@@ -1,3 +1,19 @@
+/* Nasconde la scrollbar in modo compatibile */
+html {
+  overflow-y: hidden;
+}
+
+/* Riabilita lo scroll solo se necessario in modo invisibile */
+body {
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Nasconde completamente la scrollbar in Webkit (Chrome, Edge) */
+body::-webkit-scrollbar {
+  display: none;
+}
+
 /* --- Stili base --- */
 body {
   font-family: Arial, sans-serif;
