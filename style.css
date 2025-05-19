@@ -1,6 +1,6 @@
 /* --- Stili base --- */
 html {
-  overflow-y: auto; /* fallback di base */
+  overflow-y: hidden; /* fallback di base */
 }
 
 @supports (overflow-y: overlay) {
@@ -20,6 +20,8 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  overflow-y: auto;
+  scrollbar-width: none;
 }
 
 body.dark {
