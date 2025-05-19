@@ -2,6 +2,7 @@
 html {
   overflow-y: hidden;
   box-sizing: border-box;
+  margin: 0;
 }
 
 
@@ -9,6 +10,7 @@ html {
   html {
     overflow-y: overlay; /* se supportato, usa overlay */
     box-sizing: border-box;
+    margin:0;
   }
 }
 
