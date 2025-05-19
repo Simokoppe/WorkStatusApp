@@ -2,7 +2,6 @@ html {
   overflow-y: auto;
   box-sizing: border-box;
   margin: 0;
-  height: 100%;
 }
 
 body {
@@ -18,7 +17,7 @@ body {
   justify-content: center;
   align-items: center;
   position: relative;
-  height: 100%;
+  height: 100vh;
   box-sizing: border-box;
 }
 
