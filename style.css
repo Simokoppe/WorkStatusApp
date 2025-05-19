@@ -1,8 +1,8 @@
-/* --- Nasconde scrollbar verticale se vuoi, altrimenti cambia overflow-y in auto --- */
-html {
-  margin: 0;
+/* --- Stili base --- */
+html, body {
   height: 100%;
-  overflow-y: hidden; /* usa 'auto' se vuoi scrollbar */
+  margin: 0;
+  padding: 20px;
   box-sizing: border-box;
 }
 
@@ -10,15 +10,11 @@ body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f9;
   color: #333;
-  margin: 0;
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 100vh;
   transition: background-color 0.3s ease, color 0.3s ease;
-  box-sizing: border-box;
-  /* position fixed rimosso */
-  /* overflow-y rimosso */
 }
 
 body.dark {
@@ -27,20 +23,22 @@ body.dark {
 }
 
 .container {
-  border: 2px solid red;
-  background-color: rgba(255, 0, 0, 0.1);
+  background-color: #fff;
   padding: 30px 40px;
   border-radius: 8px;
-  width: 450px !important;
-  height: 300px !important;
-  box-shadow: 0 4px 10px rgba(65, 64, 64, 0.692);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+  width: 450px;
+  max-width: 100%;
+  box-shadow: 0 4px 10px rgba(65, 64, 64, 0.7);
+  border: 2px solid #0078d7; /* bordo ben visibile */
   text-align: center;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+  box-sizing: border-box;
 }
 
 body.dark .container {
   background-color: #1e1e1e;
-  box-shadow: 0 4px 15px rgba(150, 150, 150, 0.438);
+  box-shadow: 0 4px 15px rgba(150, 150, 150, 0.4);
+  border-color: #3399ff;
 }
 
 h1#time {
@@ -110,7 +108,7 @@ body.dark .progress-bar {
 }
 
 .theme-btn #theme-icon {
-  font-size: 2rem; /* o qualsiasi dimensione preferisci */
+  font-size: 2rem;
   display: inline-block;
   line-height: 1;
 }
