@@ -15,6 +15,16 @@ body::-webkit-scrollbar {
 }
 
 /* --- Stili base --- */
+html {
+  overflow-y: hidden; /* fallback di base */
+}
+
+@supports (overflow-y: overlay) {
+  html {
+    overflow-y: overlay; /* se supportato, usa overlay */
+  }
+}
+
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f9;
@@ -26,6 +36,8 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  overflow-y: auto;
+  scrollbar-width: none;
 }
 
 body.dark {
