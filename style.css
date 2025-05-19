@@ -1,40 +1,41 @@
-html {
-  overflow-y: auto;
-  box-sizing: border-box;
-  margin: 0;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f9;
-  color: #333;
+html, body {
   margin: 0;
   padding: 0;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
 
-  /* Flexbox per centrare */
+/* Corpo centrato */
+body {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #f4f4f9;
+  color: #333;
+  transition: background-color 0.3s ease, color 0.3s ease;
   position: relative;
-  height: 100vh;
-  box-sizing: border-box;
 }
 
+/* Tema scuro */
 body.dark {
   background-color: #121212;
   color: #ddd;
 }
 
+/* Box principale */
 .container {
   background-color: #fff;
   padding: 30px 40px;
   border-radius: 8px;
   width: 450px;
+  max-height: 90vh;
+  overflow-y: auto;
   box-shadow: 0 4px 10px rgba(65, 64, 64, 0.692);
   transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
   text-align: center;
-  box-sizing: border-box; /* assicurati che padding non aumenti larghezza */
+  box-sizing: border-box;
 }
 
 body.dark .container {
@@ -42,6 +43,7 @@ body.dark .container {
   box-shadow: 0 4px 15px rgba(150, 150, 150, 0.438);
 }
 
+/* Orario */
 h1#time {
   font-size: 2.5rem;
   margin: 0 0 10px 0;
@@ -85,7 +87,7 @@ body.dark .progress-bar {
   user-select: none;
 }
 
-/* Bottone tema sole/luna */
+/* Bottone sole/luna */
 .theme-btn {
   position: fixed;
   top: 20px;
@@ -109,12 +111,12 @@ body.dark .progress-bar {
 }
 
 .theme-btn #theme-icon {
-  font-size: 2rem; /* o qualsiasi dimensione preferisci */
+  font-size: 2rem;
   display: inline-block;
   line-height: 1;
 }
 
-/* Responsive per schermi piccoli */
+/* Responsive */
 @media (max-width: 480px) {
   .container {
     width: 90%;
