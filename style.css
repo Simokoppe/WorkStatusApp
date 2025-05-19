@@ -27,6 +27,7 @@ body.dark {
 }
 
 .container {
+  border: 2px solid red;
   background-color: #fff;
   padding: 30px 40px;
   border-radius: 8px;
