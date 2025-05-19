@@ -2,7 +2,6 @@ html {
   overflow-y: auto;
   box-sizing: border-box;
   margin: 0;
-  padding: 20px; /* Mantieni il padding per evitare che tocchi i bordi */
 }
 
 body {
@@ -18,7 +17,7 @@ body {
   justify-content: center;
   align-items: center;
 
-  min-height: 100vh;
+  min-height: 100%;
   box-sizing: border-box;
 }
 
