@@ -1,27 +1,14 @@
 /* Nasconde la scrollbar in modo compatibile */
 html {
   overflow-y: hidden;
+  box-sizing: border-box;
 }
 
-/* Riabilita lo scroll solo se necessario in modo invisibile */
-body {
-  overflow-y: auto;
-  scrollbar-width: none; /* Firefox */
-}
-
-/* Nasconde completamente la scrollbar in Webkit (Chrome, Edge) */
-body::-webkit-scrollbar {
-  display: none;
-}
-
-/* --- Stili base --- */
-html {
-  overflow-y: hidden; /* fallback di base */
-}
 
 @supports (overflow-y: overlay) {
   html {
     overflow-y: overlay; /* se supportato, usa overlay */
+    box-sizing: border-box;
   }
 }
 
@@ -38,7 +25,7 @@ body {
   min-height: 100vh;
   overflow-y: auto;
   scrollbar-width: none;
-  padding: 0;
+  box-sizing: border-box;
 }
 
 body.dark {
