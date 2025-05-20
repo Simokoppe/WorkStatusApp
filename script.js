@@ -119,7 +119,7 @@ function getImageForPercentDay(p) {
 // Colore barra in base alla percentuale
 function getBarColor(p) {
   if (p < 34) return "#ee6c6c";
-  if (p < 69) return "#eebc6c";
+  if (34 <= p && p < 69) return "#eebc6c";
   return "#62d162";
 }
 
