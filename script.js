@@ -97,9 +97,8 @@ function calculateWorkWeekPercent(date) {
 
 // Restituisce immagine per percentuale settimana
 function getImageForPercentWeek(p) {
-  const day = date.getDay();
   if ([20, 40, 60, 80].includes(p)) return "casa.png";
-  if ([10, 30, 50, 70, 90].includes(p) & (date.getHours() > 13 & date.getHours() < 14)) return "cibo.png";
+  if ([10, 30, 50, 70, 90].includes(p)) return "cibo.png";
   if (p === 100) return "festa.png";
   if (p < 50) return "faccina_triste.png";
   if (p >= 69 && p < 70) return "smirk.png";
