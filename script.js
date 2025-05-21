@@ -65,7 +65,8 @@ function calculateDayPercent(date) {
   }
 
   const total = (end - start) - (lunchEnd - lunchStart);
-  return ((worked / total) * 100).toFixed(2);  // 👈 due cifre decimali
+  const value = (worked / total) * 100;
+  return Number.isInteger(value) ? value : Number(value.toFixed(2));// 👈 due cifre decimali
 }
 
 // Calcola percentuale settimana lavorativa (5 giorni da 0% a 100%)
@@ -92,7 +93,8 @@ function calculateWorkWeekPercent(date) {
   const total = (end - start) - (lunchEnd - lunchStart);
   const dailyPercent = (worked / total) * 100;
 
-  return (((day - 1) * 100 + dailyPercent) / 5).toFixed(2);  // 👈 due cifre decimali
+  const rawValue = ((day - 1) * 100 + dailyPercent) / 5;
+  return Number.isInteger(rawValue) ? rawValue : Number(rawValue.toFixed(2));  // 👈 due cifre decimali
 }
 
 // Restituisce immagine per percentuale settimana
