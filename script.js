@@ -4,19 +4,23 @@ function updateTime() {
   const formattedDate = getFormattedDate(now);
   const weekNumber = getWeekNumber(now);
 
+  // Mostra orario, giorno e settimana
   document.getElementById("time").textContent = now.toLocaleTimeString("it-IT", { hour12: false });
   document.getElementById("day").textContent = formattedDate;
   document.getElementById("week").textContent = `${weekNumber}° settimana`;
 
+  // Calcola percentuali settimana e giornata
   const weekPercent = calculateWorkWeekPercent(now);
   const dayPercent = calculateDayPercent(now);
 
+  // Aggiorna barra e testo settimana
   document.getElementById("percentage").textContent = `${weekPercent}%`;
   const progressWeek = document.getElementById("progress-fill-week");
   progressWeek.style.width = `${weekPercent}%`;
   progressWeek.style.backgroundColor = getBarColor(weekPercent);
   document.getElementById("status-img-week").src = `assets/${getImageForPercentWeek(weekPercent)}`;
 
+  // Aggiorna barra e testo giornata
   document.getElementById("daily-percentage").textContent = `${dayPercent}%`;
   const progressDay = document.getElementById("progress-fill-day");
   progressDay.style.width = `${dayPercent}%`;
@@ -41,19 +45,21 @@ function getWeekNumber(date) {
 // Calcola percentuale giornata lavorativa (9-13 pausa 13-14, 14-18)
 function calculateDayPercent(date) {
   const day = date.getDay();
-  if (day === 0 || day === 6) return 0;
+  if (day === 0 || day === 6) return 0; // weekend
 
   const start = 9 * 60;
   const lunchStart = 13 * 60;
   const lunchEnd = 14 * 60;
   const end = 18 * 60;
-  let current = date.getHours() * 60 + date.getMinutes();
 
+  let current = date.getHours() * 60 + date.getMinutes();
   if (current < start) current = start;
   if (current > end) current = end;
 
   let worked = current - start;
-  if (current > lunchStart) worked -= Math.min(current, lunchEnd) - lunchStart;
+  if (current > lunchStart) {
+    worked -= Math.min(current, lunchEnd) - lunchStart;
+  }
 
   const total = (end - start) - (lunchEnd - lunchStart);
   const value = (worked / total) * 100;
@@ -69,18 +75,19 @@ function calculateWorkWeekPercent(date) {
   const lunchStart = 13 * 60;
   const lunchEnd = 14 * 60;
   const end = 18 * 60;
-  let current = date.getHours() * 60 + date.getMinutes();
 
+  let current = date.getHours() * 60 + date.getMinutes();
   if (current < start) current = start;
   if (current > end) current = end;
 
   let worked = current - start;
-  if (current > lunchStart) worked -= Math.min(current, lunchEnd) - lunchStart;
+  if (current > lunchStart) {
+    worked -= Math.min(current, lunchEnd) - lunchStart;
+  }
 
   const total = (end - start) - (lunchEnd - lunchStart);
   const dailyPercent = (worked / total) * 100;
   const rawValue = ((day - 1) * 100 + dailyPercent) / 5;
-
   return Number.isInteger(rawValue) ? rawValue : Number(rawValue.toFixed(2));
 }
 
@@ -112,7 +119,7 @@ function getBarColor(p) {
   return "#62d162";
 }
 
-// Tema scuro/chiaro
+// Tema chiaro/scuro
 const themeToggleBtn = document.getElementById("theme-toggle");
 const themeIcon = document.getElementById("theme-icon");
 
@@ -137,32 +144,39 @@ window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", e =
   setTheme(e.matches);
 });
 
-// METEO: aggiorna ogni ora
-function fetchWeather() {
-  const weatherBox = document.getElementById("weather-box");
+// METEO
+async function fetchWeather() {
+  const apiKey = "afd17550727fcd20ec89ba2302c5293e";
+  const city = "San Nicolò a Trebbia,IT";
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric&lang=it`;
 
-  // 👇 Inserisci qui la tua API + key
-  fetch('https://api.openweathermap.org/data/2.5/weather?q=San%20Nicolo%20a%20Trebbia,it&units=metric&lang=it&appid=afd17550727fcd20ec89ba2302c5293e')
-    .then(response => response.json())
-    .then(data => {
-      const temperature = data.main.temp.toFixed(1); // o data.current.temp dipende dall'API
-      const condition = data.weather[0].description;
-      const location = data.name;
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("Errore meteo");
+    const data = await res.json();
 
-      weatherBox.textContent = `${location}: ${temperature}°C, ${condition}`;
-    })
-    .catch(error => {
-      console.error("Errore meteo:", error);
-      weatherBox.textContent = "Errore nel recupero del meteo.";
-    });
+    const temperature = Math.round(data.main.temp);
+    const iconCode = data.weather[0].icon;
+    const description = data.weather[0].description;
+
+    const weatherHTML = `
+      <img src="https://openweathermap.org/img/wn/${iconCode}@2x.png" alt="${description}" title="${description}" style="vertical-align: middle; height: 32px;">
+      <span style="font-size: 1.1em;">${temperature}°C - ${description}</span>
+    `;
+    document.getElementById("weather").innerHTML = weatherHTML;
+  } catch (err) {
+    console.error("Errore nel recupero meteo:", err);
+    document.getElementById("weather").textContent = "⚠️ Meteo non disponibile";
+  }
 }
 
+// Inizializzazione
 document.addEventListener("DOMContentLoaded", () => {
   const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
   setTheme(prefersDark);
-
   updateTime();
-  setInterval(updateTime, 1000);     // Aggiorna orario ogni secondo
-  fetchWeather();                    // Aggiorna meteo subito
-  setInterval(fetchWeather, 3600000); // Aggiorna meteo ogni ora (3600000ms)
+  setInterval(updateTime, 1000);
+
+  fetchWeather(); // subito all’avvio
+  setInterval(fetchWeather, 60 * 60 * 1000); // ogni ora
 });
