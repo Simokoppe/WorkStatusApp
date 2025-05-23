@@ -4,23 +4,19 @@ function updateTime() {
   const formattedDate = getFormattedDate(now);
   const weekNumber = getWeekNumber(now);
 
-  // Mostra orario, giorno e settimana
   document.getElementById("time").textContent = now.toLocaleTimeString("it-IT", { hour12: false });
   document.getElementById("day").textContent = formattedDate;
   document.getElementById("week").textContent = `${weekNumber}° settimana`;
 
-  // Calcola percentuali settimana e giornata
   const weekPercent = calculateWorkWeekPercent(now);
   const dayPercent = calculateDayPercent(now);
 
-  // Aggiorna barra e testo settimana
   document.getElementById("percentage").textContent = `${weekPercent}%`;
   const progressWeek = document.getElementById("progress-fill-week");
   progressWeek.style.width = `${weekPercent}%`;
   progressWeek.style.backgroundColor = getBarColor(weekPercent);
   document.getElementById("status-img-week").src = `assets/${getImageForPercentWeek(weekPercent)}`;
 
-  // Aggiorna barra e testo giornata
   document.getElementById("daily-percentage").textContent = `${dayPercent}%`;
   const progressDay = document.getElementById("progress-fill-day");
   progressDay.style.width = `${dayPercent}%`;
@@ -32,7 +28,6 @@ function updateTime() {
 function getFormattedDate(date) {
   const giorni = ["Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"];
   const mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
-
   return `${giorni[date.getDay()]} ${date.getDate()} ${mesi[date.getMonth()]} ${date.getFullYear()}`;
 }
 
@@ -46,55 +41,47 @@ function getWeekNumber(date) {
 // Calcola percentuale giornata lavorativa (9-13 pausa 13-14, 14-18)
 function calculateDayPercent(date) {
   const day = date.getDay();
-  if (day === 0 || day === 6) return 0; // weekend
+  if (day === 0 || day === 6) return 0;
 
   const start = 9 * 60;
   const lunchStart = 13 * 60;
   const lunchEnd = 14 * 60;
   const end = 18 * 60;
-
   let current = date.getHours() * 60 + date.getMinutes();
 
   if (current < start) current = start;
   if (current > end) current = end;
 
   let worked = current - start;
-
-  if (current > lunchStart) {
-    worked -= Math.min(current, lunchEnd) - lunchStart;
-  }
+  if (current > lunchStart) worked -= Math.min(current, lunchEnd) - lunchStart;
 
   const total = (end - start) - (lunchEnd - lunchStart);
   const value = (worked / total) * 100;
-  return Number.isInteger(value) ? value : Number(value.toFixed(2));// 👈 due cifre decimali
+  return Number.isInteger(value) ? value : Number(value.toFixed(2));
 }
 
 // Calcola percentuale settimana lavorativa (5 giorni da 0% a 100%)
 function calculateWorkWeekPercent(date) {
   const day = date.getDay();
-  if (day === 0 || day === 6) return 0; // weekend
+  if (day === 0 || day === 6) return 0;
 
   const start = 9 * 60;
   const lunchStart = 13 * 60;
   const lunchEnd = 14 * 60;
   const end = 18 * 60;
-
   let current = date.getHours() * 60 + date.getMinutes();
 
   if (current < start) current = start;
   if (current > end) current = end;
 
   let worked = current - start;
-
-  if (current > lunchStart) {
-    worked -= Math.min(current, lunchEnd) - lunchStart;
-  }
+  if (current > lunchStart) worked -= Math.min(current, lunchEnd) - lunchStart;
 
   const total = (end - start) - (lunchEnd - lunchStart);
   const dailyPercent = (worked / total) * 100;
-
   const rawValue = ((day - 1) * 100 + dailyPercent) / 5;
-  return Number.isInteger(rawValue) ? rawValue : Number(rawValue.toFixed(2));  // 👈 due cifre decimali
+
+  return Number.isInteger(rawValue) ? rawValue : Number(rawValue.toFixed(2));
 }
 
 // Restituisce immagine per percentuale settimana
@@ -125,7 +112,7 @@ function getBarColor(p) {
   return "#62d162";
 }
 
-// Gestione toggle tema con emoji
+// Tema scuro/chiaro
 const themeToggleBtn = document.getElementById("theme-toggle");
 const themeIcon = document.getElementById("theme-icon");
 
@@ -150,9 +137,32 @@ window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", e =
   setTheme(e.matches);
 });
 
+// METEO: aggiorna ogni ora
+function fetchWeather() {
+  const weatherBox = document.getElementById("weather-box");
+
+  // 👇 Inserisci qui la tua API + key
+  fetch('afd17550727fcd20ec89ba2302c5293e')
+    .then(response => response.json())
+    .then(data => {
+      const temperature = data.main.temp.toFixed(1); // o data.current.temp dipende dall'API
+      const condition = data.weather[0].description;
+      const location = data.name;
+
+      weatherBox.textContent = `${location}: ${temperature}°C, ${condition}`;
+    })
+    .catch(error => {
+      console.error("Errore meteo:", error);
+      weatherBox.textContent = "Errore nel recupero del meteo.";
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
   setTheme(prefersDark);
+
   updateTime();
-  setInterval(updateTime, 1000);
+  setInterval(updateTime, 1000);     // Aggiorna orario ogni secondo
+  fetchWeather();                    // Aggiorna meteo subito
+  setInterval(fetchWeather, 3600000); // Aggiorna meteo ogni ora (3600000ms)
 });
