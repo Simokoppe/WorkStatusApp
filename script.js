@@ -142,7 +142,7 @@ function fetchWeather() {
   const weatherBox = document.getElementById("weather-box");
 
   // 👇 Inserisci qui la tua API + key
-  fetch('http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=afd17550727fcd20ec89ba2302c5293e')
+  fetch('https://api.openweathermap.org/data/2.5/weather?q=San%20Nicolo%20a%20Trebbia,it&units=metric&lang=it&appid=afd17550727fcd20ec89ba2302c5293e')
     .then(response => response.json())
     .then(data => {
       const temperature = data.main.temp.toFixed(1); // o data.current.temp dipende dall'API
