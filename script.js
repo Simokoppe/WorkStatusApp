@@ -157,7 +157,10 @@ async function fetchWeather() {
 
     const temperature = Math.round(data.main.temp);
     const iconCode = data.weather[0].icon;
-    const description = data.weather[0].description;
+
+    // Capitalizza la prima lettera della descrizione
+    const rawDescription = data.weather[0].description;
+    const description = rawDescription.charAt(0).toUpperCase() + rawDescription.slice(1);
 
     const weatherHTML = `
       <img src="https://openweathermap.org/img/wn/${iconCode}@2x.png" alt="${description}" title="${description}" style="vertical-align: middle; height: 32px;">
